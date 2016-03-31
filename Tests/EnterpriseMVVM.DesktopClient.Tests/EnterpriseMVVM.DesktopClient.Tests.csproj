@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{857F61E3-C1D6-4812-8862-D3BC1DEDA09D}</ProjectGuid>
+    <ProjectGuid>{6F7E900C-9B1E-4FFC-9A4E-9D8AF9931DF8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tests</RootNamespace>
-    <AssemblyName>Tests</AssemblyName>
+    <RootNamespace>EnterpriseMVVM.DesktopClient.Tests</RootNamespace>
+    <AssemblyName>EnterpriseMVVM.DesktopClient.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -29,7 +29,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\Build\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -51,15 +51,21 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ObservableObjectTests.cs" />
+    <Compile Include="UnitTests\CustomerViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EnterpriseMVVM.Windows\EnterpriseMVVM.Windows.csproj">
+    <ProjectReference Include="..\..\Code\Desktop Client\EnterpriseMVVM.DesktopClient\EnterpriseMVVM.DesktopClient.csproj">
+      <Project>{d6bed37b-e0a1-4d33-9825-9de61f132b45}</Project>
+      <Name>EnterpriseMVVM.DesktopClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Code\Desktop Client\EnterpriseMVVM.Windows\EnterpriseMVVM.Windows.csproj">
       <Project>{9c6b8a5e-35eb-4631-ae33-1c9a293d81d0}</Project>
       <Name>EnterpriseMVVM.Windows</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FunctionalTests\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

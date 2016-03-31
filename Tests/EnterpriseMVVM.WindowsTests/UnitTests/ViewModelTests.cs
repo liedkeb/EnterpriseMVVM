@@ -4,7 +4,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Tests
+namespace EnterpriseMVVM.Windows.Tests.UnitTests
 {
     [TestClass]
     public class ViewModelTests
