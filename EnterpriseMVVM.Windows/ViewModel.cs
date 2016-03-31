@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EnterpriseMVVM.Windows
 {
-    public abstract class ViewModel : IDataErrorInfo
+    public abstract class ViewModel : ObservableObject, IDataErrorInfo
     {
         public string this[string columnName]
         {

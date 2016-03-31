@@ -23,6 +23,12 @@ namespace Tests
         }
 
         [TestMethod]
+        public void IsObservableObject()
+        {
+            Assert.IsTrue(typeof(ViewModel).BaseType == typeof(ObservableObject));
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(NotSupportedException))]
         public void IDataErrorInfo_ErrorPropertyIsNotImplemented()
         {
