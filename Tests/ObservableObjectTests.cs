@@ -10,7 +10,7 @@ namespace Tests
 {
 
     [TestClass]
-    class ObservableObjectTests
+    public class ObservableObjectTests
     {
         [TestMethod]
         public void PropertyChangedEventHandlerIsRised()
