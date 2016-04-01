@@ -1,13 +1,8 @@
-﻿using EnterpriseMVVM.Windows;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace EnterpriseMVVM.Windows.Tests.UnitTests
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Windows;
 
     [TestClass]
     public class ObservableObjectTests

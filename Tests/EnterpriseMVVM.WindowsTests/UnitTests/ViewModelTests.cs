@@ -1,11 +1,12 @@
-﻿using EnterpriseMVVM.Windows;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿
 
 namespace EnterpriseMVVM.Windows.Tests.UnitTests
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     [TestClass]
     public class ViewModelTests
     {
