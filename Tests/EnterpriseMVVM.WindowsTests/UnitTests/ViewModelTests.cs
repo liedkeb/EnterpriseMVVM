@@ -53,11 +53,26 @@ namespace EnterpriseMVVM.Windows.Tests.UnitTests
             };
             Assert.IsNull(viewModel["RequiredProperty"]);
         }
+
+        [TestMethod]
+        public void IndexerReturnsErrorMessageForRequestedInvalidProperty()
+        {
+            var viewModel = new StubViewModel
+            {
+                RequiredProperty = null,
+                SomeOtherProperty = null
+            };
+            var msg = viewModel["SomeOtherProperty"];
+
+            Assert.IsTrue(msg.Contains("SomeOtherProperty"));
+        }
     }
 
     class StubViewModel : ViewModel
     {
         [Required]
         public string RequiredProperty { get; set; }
+        [Required]
+        public string SomeOtherProperty { get;  set; }
     }
 }
