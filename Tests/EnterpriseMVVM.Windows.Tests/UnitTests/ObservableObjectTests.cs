@@ -1,0 +1,41 @@
+﻿
+namespace EnterpriseMVVM.Windows.Tests.UnitTests
+{
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Windows;
+
+    [TestClass]
+    public class ObservableObjectTests
+    {
+        [TestMethod]
+        public void PropertyChangedEventHandlerIsRised()
+        {
+            var obj = new StubObservableObject();
+
+            bool raised = false;
+            obj.PropertyChanged += (sender, e) =>
+            {
+                Assert.IsTrue(e.PropertyName == "ChangedProperty");
+                raised = true;
+            };
+
+            obj.ChangedProperty = "Some Value";
+
+            if (!raised) Assert.Fail("PropertyChanged was never invoded.");
+        }
+    }
+
+    class StubObservableObject : ObservableObject
+    {
+        private string changedProperty;
+        public string ChangedProperty
+        {
+            get { return changedProperty; }
+            set
+            {
+                changedProperty = value;
+                NotifyPropertyChanged();
+            }
+        }
+    }
+}
