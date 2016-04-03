@@ -8,11 +8,47 @@ namespace EnterpriseMVVM.Data.Tests.UnitTests
     {
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
+        public void AddNewCustomer_ThrowsException_WhenEmailIsNull()
+        {
+            using (var bc = new BusinessContext())
+            {
+                var customer = new Customer
+                {
+                    Email = null,
+                    FirstName = "Bartosz",
+                    LastName = "Liedke"
+                };
+                bc.AddNewCustomer(customer);
+            }
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AddNewCustomer_ThrowsException_WhenEmailIsEmpty()
+        {
+            using (var bc = new BusinessContext())
+            {
+                var customer = new Customer
+                {
+                    Email = "",
+                    FirstName = "Bartosz",
+                    LastName = "Liedke"
+                };
+                bc.AddNewCustomer(customer);
+            }
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void AddNewCustomer_ThrowsException_WhenFirstNameIsNull()
         {
             using (var bc = new BusinessContext())
             {
-                bc.AddNewCustomer(null, "Liedke");
+                var customer = new Customer
+                {
+                    Email = "customer@nw.com",
+                    FirstName = null,
+                    LastName = "Liedke"
+                };
+                bc.AddNewCustomer(customer);
             }
         }
 
@@ -22,7 +58,13 @@ namespace EnterpriseMVVM.Data.Tests.UnitTests
         {
             using (var bc = new BusinessContext())
             {
-                bc.AddNewCustomer("", "Liedke");
+                var customer = new Customer
+                {
+                    Email = "customer@nw.com",
+                    FirstName = "",
+                    LastName = "Liedke"
+                };
+                bc.AddNewCustomer(customer);
             }
         }
 
@@ -32,7 +74,13 @@ namespace EnterpriseMVVM.Data.Tests.UnitTests
         {
             using (var bc = new BusinessContext())
             {
-                bc.AddNewCustomer("Bartosz", null);
+                var customer = new Customer
+                {
+                    Email = "customer@nw.com",
+                    FirstName = "Bartosz",
+                    LastName = null
+                };
+                bc.AddNewCustomer(customer);
             }
         }
 
@@ -42,7 +90,13 @@ namespace EnterpriseMVVM.Data.Tests.UnitTests
         {
             using (var bc = new BusinessContext())
             {
-                bc.AddNewCustomer("Bartosz", "");
+                var customer = new Customer
+                {
+                    Email = "customer@nw.com",
+                    FirstName = "Bartosz",
+                    LastName = ""
+                };
+                bc.AddNewCustomer(customer);
             }
         }
     }

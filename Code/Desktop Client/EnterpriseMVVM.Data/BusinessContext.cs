@@ -17,30 +17,29 @@ namespace EnterpriseMVVM.Data
             get { return context; }
         }
 
-        public Customer AddNewCustomer(string firstName, string lastName)
+        public void AddNewCustomer(Customer customer)
         {
-            if (firstName == null)
-                throw new ArgumentNullException("firstName", "firstName must be non-null");
-            if (lastName == null)
-                throw new ArgumentNullException("lastName", "lastName must be non-null");
+            Check.Require(customer.FirstName);
+            Check.Require(customer.LastName);
+            Check.Require(customer.Email);
 
-
-            if (String.IsNullOrWhiteSpace(firstName))
-                throw new ArgumentException("firstName must not be an empty string", "firstName");
-            if (String.IsNullOrWhiteSpace(lastName))
-                throw new ArgumentException("lastName must not be an empty string", "lastName");
-
-            var customer = new Customer
-            {
-                FirstName = firstName,
-                LastName = lastName
-            };
 
             context.Customers.Add(customer);
             context.SaveChanges();
 
-            return customer;
         }
+
+        static class Check
+        {
+            public static void Require(string value)
+            {
+                if (value == null)
+                    throw new ArgumentNullException();
+                if (value.Trim().Length==0)
+                    throw new ArgumentException();
+            }
+        }
+
 
         #region IDisposable Members
         /// <summary>
