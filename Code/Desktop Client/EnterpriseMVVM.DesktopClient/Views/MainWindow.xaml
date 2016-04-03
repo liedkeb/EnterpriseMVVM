@@ -10,8 +10,33 @@
     <Window.DataContext>
         <viewModels:CustomerViewModel />
     </Window.DataContext>
-    <Grid>
-        <TextBox Text="{Binding CustomerName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="30"/>
-    </Grid>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top">
+            <Label Content="First name:"/>
+            <TextBox Text="{Binding FirstName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                 Margin="5"/>
+            <Label Content="Last name:"/>
+            <TextBox Text="{Binding LastName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                 Margin="5"/>
+            <Label Content="Email:"/>
+            <TextBox Text="{Binding Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                 Margin="5"/>
+            <Button Command="{Binding AddCustomerCommand}" >Add Customer</Button>
+        </StackPanel>
+        <ListBox ItemsSource="{Binding Customers}" DockPanel.Dock="Bottom">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock >
+                        <Run FontWeight="Bold" Text="First Name:" />
+                        <Run Text ="{Binding FirstName}"/>
+                        <Run FontWeight="Bold" Text="Last Name:" />
+                        <Run Text ="{Binding LastName}"/>
+                        <Run FontWeight="Bold" Text="Email:" />
+                        <Run Text ="{Binding Email}"/>
+                    </TextBlock>
+                    
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
 </Window>
