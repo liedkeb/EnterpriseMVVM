@@ -5,7 +5,7 @@ namespace EnterpriseMVVM.Data
     using System.Collections.Generic;
     using System.Linq;
 
-    public sealed class BusinessContext : IDisposable
+    public sealed class BusinessContext : IDisposable, IBusinessContext
     {
         private readonly DataContext context;
         private bool disposed;
@@ -20,7 +20,7 @@ namespace EnterpriseMVVM.Data
             get { return context; }
         }
 
-        public void AddNewCustomer(Customer customer)
+        public void CreateCustomer(Customer customer)
         {
             Check.Require(customer.FirstName);
             Check.Require(customer.LastName);

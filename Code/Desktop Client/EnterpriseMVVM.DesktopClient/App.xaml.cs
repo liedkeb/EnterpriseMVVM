@@ -1,5 +1,7 @@
-﻿using EnterpriseMVVM.DesktopClient.ViewModels;
+﻿using EnterpriseMVVM.Data;
+using EnterpriseMVVM.DesktopClient.ViewModels;
 using EnterpriseMVVM.DesktopClient.Views;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -18,10 +20,16 @@ namespace EnterpriseMVVM.DesktopClient
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            var container = new UnityContainer();
+
+            container.RegisterType<IBusinessContext, BusinessContext>();
+            container.RegisterType<MainViewModel>();
+
             var window = new MainWindow
             {
-                DataContext = new MainViewModel()
+                DataContext = container.Resolve<MainViewModel>()
             };
+
             window.ShowDialog();
 
         }

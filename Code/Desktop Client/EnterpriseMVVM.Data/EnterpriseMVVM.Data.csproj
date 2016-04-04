@@ -49,6 +49,7 @@
     <Compile Include="BusinessContext.cs" />
     <Compile Include="Customer.cs" />
     <Compile Include="DataContext.cs" />
+    <Compile Include="IBusinessContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

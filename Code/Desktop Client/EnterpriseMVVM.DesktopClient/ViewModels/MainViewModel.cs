@@ -10,13 +10,9 @@ namespace EnterpriseMVVM.DesktopClient.ViewModels
     public class MainViewModel : ViewModel
     {
         private Customer selectedCustomer;
-        private readonly BusinessContext context;
+        private readonly IBusinessContext context;
 
-        public MainViewModel() : this(new BusinessContext())
-        {
-        }
-
-        public MainViewModel(BusinessContext context)
+        public MainViewModel(IBusinessContext context)
         {
             this.context = context;
             Customers = new ObservableCollection<Customer>();
@@ -36,10 +32,23 @@ namespace EnterpriseMVVM.DesktopClient.ViewModels
             {
                 selectedCustomer = value;
                 NotifyPropertyChanged();
+                NotifyPropertyChanged("CanModify");
             }
                 
         }
-
+        /// <summary>
+        /// Gets a value indicating whether <see cref="SelectedCustomer"/> is not null.
+        /// </summary>
+        public bool CanModify
+        {
+            get
+            {
+                return SelectedCustomer != null;
+            }
+        }
+        /// <summary>
+        /// Gets a value indicationg whether the view model is valid.
+        /// </summary>
         public bool IsValid
         {
             get
@@ -76,26 +85,24 @@ namespace EnterpriseMVVM.DesktopClient.ViewModels
         }
         private void AddCustomer()
         {
-            using (var api = new BusinessContext())
+            var customer = new Customer
             {
-                var customer = new Customer
-                {
-                    FirstName = "New",
-                    LastName = "Customer",
-                    Email = "new@customer.com"
-                };
-                try
-                {
-                    api.AddNewCustomer(customer);
-                }
-                catch (Exception)
-                {
-
-                    // TODO: cover later
-                    return;
-                }
-                Customers.Add(customer);
+                FirstName = "New",
+                LastName = "Customer",
+                Email = "new@customer.com"
+            };
+            try
+            {
+                context.CreateCustomer(customer);
             }
+            catch (Exception)
+            {
+
+                // TODO: cover later
+                return;
+            }
+            Customers.Add(customer);
+
         }
         private void SaveCustomer()
         {
@@ -105,6 +112,7 @@ namespace EnterpriseMVVM.DesktopClient.ViewModels
         {
             context.DeleteCustomer(SelectedCustomer);
             Customers.Remove(SelectedCustomer);
+            SelectedCustomer = null;
         }
 
         private void GetCustomerList()
@@ -112,6 +120,7 @@ namespace EnterpriseMVVM.DesktopClient.ViewModels
             Customers.Clear();
             foreach (var customer in context.GetCustomerList())
                 Customers.Add(customer);
+            SelectedCustomer = null;
         }
     }
 }
