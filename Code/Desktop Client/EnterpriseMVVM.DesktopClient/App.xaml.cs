@@ -20,7 +20,7 @@ namespace EnterpriseMVVM.DesktopClient
             base.OnStartup(e);
             var window = new MainWindow
             {
-                DataContext = new CustomerViewModel()
+                DataContext = new MainViewModel()
             };
             window.ShowDialog();
 

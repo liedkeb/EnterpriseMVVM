@@ -8,35 +8,48 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Window.DataContext>
-        <viewModels:CustomerViewModel />
+        <viewModels:MainViewModel />
     </Window.DataContext>
-    <DockPanel>
-        <StackPanel DockPanel.Dock="Top">
-            <Label Content="First name:"/>
-            <TextBox Text="{Binding FirstName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="5"/>
-            <Label Content="Last name:"/>
-            <TextBox Text="{Binding LastName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="5"/>
-            <Label Content="Email:"/>
-            <TextBox Text="{Binding Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
-                 Margin="5"/>
-            <Button Command="{Binding AddCustomerCommand}" >Add Customer</Button>
-        </StackPanel>
-        <ListBox ItemsSource="{Binding Customers}" DockPanel.Dock="Bottom">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock >
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+        <Style TargetType="Label">
+            <Setter Property="Padding" Value="0" />
+        </Style>
+    </Window.Resources>
+    <DockPanel Margin="30">
+        <DockPanel DockPanel.Dock="Left" Width="200" Margin="0,0,32,0">
+            <TextBlock DockPanel.Dock="Top">
+                <Hyperlink Command="{Binding AddCustomerCommand}">Add Customer</Hyperlink>
+                <Hyperlink Command="{Binding GetCustomerListCommand}">Refresh</Hyperlink>
+            </TextBlock>
+            <ListBox ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock >
                         <Run FontWeight="Bold" Text="First Name:" />
                         <Run Text ="{Binding FirstName}"/>
                         <Run FontWeight="Bold" Text="Last Name:" />
                         <Run Text ="{Binding LastName}"/>
                         <Run FontWeight="Bold" Text="Email:" />
                         <Run Text ="{Binding Email}"/>
-                    </TextBlock>
-                    
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+        <StackPanel DockPanel.Dock="Right" Visibility="{Binding HasCustomer, Converter={StaticResource VisibilityConverter}}">
+            <Label Content="First name:"/>
+            <TextBox Text="{Binding SelectedCustomer.FirstName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="Last name:"/>
+            <TextBox Text="{Binding SelectedCustomer.LastName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Content="Email:"/>
+            <TextBox Text="{Binding SelectedCustomer.Email, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock>
+                <Hyperlink Command="{Binding SaveCustomerCommand}">Save</Hyperlink>
+                <Hyperlink Command="{Binding DeleteCustomerCommand}">Delete</Hyperlink>
+            </TextBlock>
+        </StackPanel>
     </DockPanel>
+
 </Window>

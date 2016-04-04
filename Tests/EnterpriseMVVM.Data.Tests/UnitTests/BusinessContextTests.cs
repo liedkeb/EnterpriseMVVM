@@ -3,8 +3,9 @@ namespace EnterpriseMVVM.Data.Tests.UnitTests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
+    using System.Linq;
     [TestClass]
-    public class BusinessContextTests
+    public class BusinessContextTests : FunctionalTest
     {
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -97,6 +98,72 @@ namespace EnterpriseMVVM.Data.Tests.UnitTests
                     LastName = ""
                 };
                 bc.AddNewCustomer(customer);
+            }
+        }
+        [TestMethod]
+        public void UpdateCustomer_ChangedValuesAreApplied()
+        {
+            using (var bc = new BusinessContext())
+            {
+                // Arrange
+                var customer = new Customer
+                {
+                    Email = "customer@nw.com",
+                    FirstName = "Bartosz",
+                    LastName = "Liedke"
+                };
+                bc.AddNewCustomer(customer);
+
+                const string newEmail = "new_customer@nw.com",
+                    newFirstName = "Adam",
+                    newLastName = "Schmit";
+                customer.Email = newEmail;
+                customer.FirstName = newFirstName;
+                customer.LastName = newLastName;
+
+                // Act
+                bc.UpdateCustomer(customer);
+
+                // Assert
+                bc.DataContext.Entry(customer).Reload();
+
+                Assert.AreEqual(newEmail, customer.Email);
+                Assert.AreEqual(newFirstName, customer.FirstName);
+                Assert.AreEqual(newLastName, customer.LastName);
+
+
+            }
+        }
+        [TestMethod]
+        public void DeleteCustomer_RemovesCustomerFromDB()
+        {
+            using (var bc = new BusinessContext())
+            {
+                // Arrange
+                var customer = new Customer { Email = "1@1.com", FirstName = "1", LastName = "a" };
+                bc.AddNewCustomer(customer);
+
+                // Act
+                bc.DeleteCustomer(customer);
+
+                // Assert
+                Assert.IsFalse(bc.DataContext.Customers.Any());
+            }
+        }
+        [TestMethod]
+        public void GetCustomerList_ReturnsExpectedCustomer()
+        {
+            using (var bc = new BusinessContext())
+            {
+                bc.AddNewCustomer(new Customer { Email = "1@1.com", FirstName = "1", LastName = "a" });
+                bc.AddNewCustomer(new Customer { Email = "2@2.com", FirstName = "2", LastName = "b" });
+                bc.AddNewCustomer(new Customer { Email = "3@3.com", FirstName = "3", LastName = "c" });
+
+                var customers = bc.GetCustomerList();
+
+                Assert.IsTrue(customers.ElementAt(0).Id == 1);
+                Assert.IsTrue(customers.ElementAt(1).Id == 2);
+                Assert.IsTrue(customers.ElementAt(2).Id == 3);
             }
         }
     }

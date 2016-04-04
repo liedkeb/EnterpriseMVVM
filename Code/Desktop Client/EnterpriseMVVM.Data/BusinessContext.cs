@@ -1,7 +1,10 @@
-﻿using System;
-
+﻿
 namespace EnterpriseMVVM.Data
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public sealed class BusinessContext : IDisposable
     {
         private readonly DataContext context;
@@ -26,6 +29,31 @@ namespace EnterpriseMVVM.Data
 
             context.Customers.Add(customer);
             context.SaveChanges();
+
+        }
+        public void UpdateCustomer(Customer customer)
+        {
+            var entity = context.Customers.Find(customer.Id);
+
+            if (entity == null)
+            {
+                throw new NotImplementedException("Handle appropriatly for using API design.");
+            }
+            context.Entry(customer).CurrentValues.SetValues(customer);
+            context.SaveChanges();
+        }
+        public void DeleteCustomer(Customer customer)
+        {
+            if (customer == null)
+            {
+                throw new NotImplementedException("Handle appropriatly for using API design.");
+            }
+            context.Customers.Remove(customer);
+            context.SaveChanges();
+        }
+        public ICollection<Customer> GetCustomerList()
+        {
+            return context.Customers.OrderBy(p => p.Id).ToArray();
 
         }
 
@@ -61,6 +89,7 @@ namespace EnterpriseMVVM.Data
 
             disposed = true;
         }
+
         #endregion
     }
 }
