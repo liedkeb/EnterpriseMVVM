@@ -2,12 +2,6 @@
 using EnterpriseMVVM.DesktopClient.ViewModels;
 using EnterpriseMVVM.DesktopClient.Views;
 using Microsoft.Practices.Unity;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace EnterpriseMVVM.DesktopClient
